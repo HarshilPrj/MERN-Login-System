@@ -51,7 +51,6 @@ const Login = () => {
               width: "40rem",
               borderRadius: "1rem",
               backgroundColor:'lightcyan'
-              backgroundColor:'lightcyan'
               
             }}
           >
