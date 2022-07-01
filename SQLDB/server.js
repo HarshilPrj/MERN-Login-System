@@ -14,9 +14,8 @@ app.post("/add_user", (req, res) => {
   const password = req.body.password;
   const no = req.body.no;
 
-//   const token = jwt.sign({ password }, "loginsystem");
-//   const verify = jwt.verify(token);
-//   console.log(verify);
+  const token = jwt.sign({ password }, "loginsystem");
+  console.log(token);
 
   DBconnect.query(
     "insert into users (user_name, password, no) values (?, ?, ?) ",
