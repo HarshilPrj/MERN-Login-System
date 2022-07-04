@@ -1,4 +1,4 @@
-const DBconnect = require("./config.js");
+const DBconnect = require("./config ");
 const express = require("express");
 const app = express();
 const bodyparser = require("body-parser");
@@ -44,6 +44,7 @@ app.post("/login", (req, res) => {
       }
       if (result.length > 0) {
         res.send(result);
+        console.log(result);
       } else {
         res.send({ message: "Wrong user name and password" });
       }
