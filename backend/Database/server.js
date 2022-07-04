@@ -4,7 +4,7 @@ const app = express();
 const bodyparser = require("body-parser");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
-// const { TokenGenerate, verifyToken } = require("../Middleware/token");
+const verifyToken = require("../Middleware/token");
 
 // const route = express.Router();
 
@@ -31,15 +31,13 @@ app.post("/add_user", (req, res) => {
   );
 });
 
-app.post("/login", (req, res) => {
-  
-
+app.post("/login", verifyToken, (req, res) => {
   const user_name = req.body.user_name;
   const password = req.body.password;
 
   const token = jwt.sign({ user_name }, "loginuser");
- console.log(token);
- 
+  console.log(token);
+
   DBconnect.query(
     "select * from users where user_name = ? AND password = ? ",
     [user_name, password],
@@ -49,7 +47,7 @@ app.post("/login", (req, res) => {
       } else if (result.length > 0) {
         res.send(result);
       } else {
-        res.send({ message: "Wrong user name and password" });
+        res.status(404).send({ message: "Wrong user name and password" });
       }
     }
   );
