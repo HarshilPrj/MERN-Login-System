@@ -1,4 +1,4 @@
-const DBconnect = require("./config ");
+const DBconnect = require("./config.js");
 const express = require("express");
 const app = express();
 const bodyparser = require("body-parser");

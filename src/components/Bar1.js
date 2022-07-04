@@ -20,6 +20,7 @@ export default function Bar1() {
           >
             <MenuIcon />
           </IconButton>
+          <Link to='/'></Link>
           <Link to='/login'>Login</Link>
           <Link to='/add_user'>Registration</Link>
         </Toolbar>
