@@ -5,6 +5,7 @@ const bodyparser = require("body-parser");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const verifyToken = require("../Middleware/token");
+const bcrypt = require("bcrypt");
 
 // const route = express.Router();
 
@@ -18,17 +19,18 @@ app.post("/add_user", (req, res) => {
   const password = req.body.password;
   const no = req.body.no;
 
-  DBconnect.query(
-    "insert into users (user_name, password, no) values (?, ?, ?) ",
-    [user_name, password, no],
-    (err, val) => {
+  bcrypt.hash(password, 10, function (err, hash) {
+    let sql = "insert into users (user_name, password, no) values ?";
+    let values = [[user_name, hash, no]];
+
+    DBconnect.query(sql, [values], (err, result) => {
       if (err) {
-        res.send(err);
+        throw err;
       } else {
-        res.send(val);
+        res.send(result);
       }
-    }
-  );
+    });
+  });
 });
 
 app.post("/login", verifyToken, (req, res) => {
