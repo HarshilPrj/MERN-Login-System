@@ -4,20 +4,17 @@ const app = express();
 const bodyparser = require("body-parser");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
+const verifyToken = require("../Middleware/token");
 
 app.use(bodyparser.json());
 app.use(express.json());
 app.use(cors());
+// app.use(verifyToken);
 
 app.post("/add_user", (req, res) => {
   const user_name = req.body.user_name;
   const password = req.body.password;
   const no = req.body.no;
-
-  const token = jwt.sign({ password ,user_name }, "loginsystem");
-  console.log(token);
-  const verify = jwt.verify(token, "loginsystem");
-  console.log(verify);
 
   DBconnect.query(
     "insert into users (user_name, password, no) values (?, ?, ?) ",
@@ -28,10 +25,11 @@ app.post("/add_user", (req, res) => {
       } else {
         res.send(val);
       }
-    });
+    }
+  );
 });
 
-app.post("/login", (req, res) => {
+app.post("/login", verifyToken, (req, res) => {
   const user_name = req.body.user_name;
   const password = req.body.password;
 
@@ -42,14 +40,20 @@ app.post("/login", (req, res) => {
       if (err) {
         res.send({ err: err });
       }
-      if (result.length > 0) {
-        res.send(result);
-        console.log(result);
-      } else {
-        res.send({ message: "Wrong user name and password" });
-      }
+
+      const TokenGenerate = () => {
+        if (result.length > 0) {
+          res.send(result);
+          const token = jwt.sign({ user_name }, "login user");
+          console.log(token);
+        } else {
+          res.send({ message: "Wrong user name and password" });
+        }
+      };
+      TokenGenerate();
     }
   );
 });
 
+module.exports = TokenGenerate;
 app.listen(5000);
