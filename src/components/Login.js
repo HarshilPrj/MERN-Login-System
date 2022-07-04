@@ -72,6 +72,7 @@ const Login = () => {
                 label="Password"
                 type="password"
                 variant="standard"
+                
                 onChange={(e) => {
                     setPassword(e.target.value);
                 }}
