@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 const verifyToken = require("../Middleware/token");
 const bcrypt = require("bcryptjs");
 const localStorage = require("local-storage");
-const JWT_SECRET = 'Coodeitisbest$solutions$pvt$ltd'
+const JWT_SECRET = "Coodeitisbest$solutions$pvt$ltd";
 
 app.use(bodyparser.json());
 app.use(express.json());
@@ -41,31 +41,32 @@ app.post("/login", async (req, res) => {
   const user_name = req.body.user_name;
   const password = req.body.password;
 
-
-  const token = jwt.sign({ user_name }, JWT_SECRET, {
-    expiresIn: "10 minute",
-  });
-  console.log(token);
-
-  localStorage.set("token", token);
-  let get = localStorage.get("token");
-  console.log("GET: ", get);
-
-  DBconnect.query(
-    "select * from users where user_name = ? AND password = ? ",
-    [user_name, password],
-    (err, result) => {
-      if (err) {
-        return res.send({ err: err });
-      } else if (result.length > 0) {
-        return res.send({ ...result, token });
-      } else {
-        return res
-          .status(404)
-          .send({ message: "Wrong user name and password" });
+  // localStorage.set("token", token);
+  // let get = localStorage.get("token");
+  // console.log("GET: ", get);
+  try {
+    DBconnect.query(
+      "select * from users where user_name = ?",
+      [user_name],
+      (err, results) => {
+        bcrypt.compare(password, results[0].password, function (err, result) {
+          console.log(">>>>>>", password);
+          console.log(">>>>>>", results[0].password);
+          if (result) {
+            return res.send(result);
+          } else {
+            return res.status(400).send('Not Found');
+          }
+        });
       }
-    }
-  );
+    );
+
+    // const token = jwt.sign({ user_name }, JWT_SECRET, { expiresIn: "10 minute", });
+    // res.json({ token })
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("some Error Occured");
+  }
 });
 
 app.listen(5000);
