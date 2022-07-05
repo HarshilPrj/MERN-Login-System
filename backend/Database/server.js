@@ -5,36 +5,35 @@ const bodyparser = require("body-parser");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const verifyToken = require("../Middleware/token");
-const bcrypt = require("bcrypt");
-const localStorage = require('local-storage');
-
-// const route = express.Router();
+const bcrypt = require("bcryptjs");
+const localStorage = require("local-storage");
+const JWT_SECRET = 'Coodeitisbest$solutions$pvt$ltd'
 
 app.use(bodyparser.json());
 app.use(express.json());
 app.use(cors());
-// route.use(token);
 
 app.get("/home", (req, res) => {
   res.send("Welcome TO DashBord");
 });
 
-app.post("/add_user", (req, res) => {
+app.post("/add_user", async (req, res) => {
+  const salt = await bcrypt.genSalt(10);
+  let secPass = await bcrypt.hash(req.body.password, salt);
+
   const user_name = req.body.user_name;
-  const password = req.body.password;
+  const password = secPass;
   const no = req.body.no;
 
-  bcrypt.hash(password, 10, function (err, hash) {
-    let sql = "insert into users (user_name, password, no) values ?";
-    let values = [[user_name, hash, no]];
+  let sql = "insert into users (user_name, password, no) values ?";
+  let values = [[user_name, password, no]];
 
-    DBconnect.query(sql, [values], (err, result) => {
-      if (err) {
-        throw err;
-      } else {
-        res.send(result);
-      }
-    });
+  DBconnect.query(sql, [values], (err, result) => {
+    if (err) {
+      throw err;
+    } else {
+      res.send(result);
+    }
   });
 });
 
@@ -42,7 +41,10 @@ app.post("/login", async (req, res) => {
   const user_name = req.body.user_name;
   const password = req.body.password;
 
-  const token = jwt.sign({ user_name }, "loginuser", { expiresIn: '10 minute' });
+
+  const token = jwt.sign({ user_name }, JWT_SECRET, {
+    expiresIn: "10 minute",
+  });
   console.log(token);
 
   localStorage.set("token", token);
@@ -58,7 +60,9 @@ app.post("/login", async (req, res) => {
       } else if (result.length > 0) {
         return res.send({ ...result, token });
       } else {
-        return res.status(404).send({ message: "Wrong user name and password" });
+        return res
+          .status(404)
+          .send({ message: "Wrong user name and password" });
       }
     }
   );
