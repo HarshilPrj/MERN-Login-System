@@ -85,9 +85,10 @@ app.get("/getuser", (req, res) => {
   }
 });
 
-app.get("/checkuser/", verifyToken , (req, res) => {
+app.post("/login/checkuser/", verifyToken , (req, res) => {
   const user_name = req.body.user_name;
   try {
+
     DBconnect.query('SELECT * FROM users where user_name = ?', [user_name] ,(err, result)=>{
       if (result) {
         res.send(result);
