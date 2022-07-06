@@ -53,14 +53,10 @@ app.post("/login", async (req, res) => {
 
         if (result) {
 
-          const data = {
-            user: {
-              username: results[0].user_name,
-            }
-          }
-          console.log(">>>>>>", data.user.username);
+          const user = results[0].user_name;
+          console.log(">>>>>>", user);
 
-          const token = jwt.sign({ data }, JWT_SECRET, { expiresIn: "1 day" });
+          const token = jwt.sign({ user }, JWT_SECRET, { expiresIn: "1 day" });
           return res.send({ ...results,token });
 
         } else {
@@ -76,7 +72,7 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.get("/getuser",verifyToken, (req, res) => {
+app.get("/getuser", (req, res) => {
 
   try {
     DBconnect.query('SELECT * FROM users',(err, result)=>{
@@ -89,10 +85,10 @@ app.get("/getuser",verifyToken, (req, res) => {
   }
 });
 
-app.get("/getuser/:username",verifyToken, (req, res) => {
-  let username = req.params.username;
+app.get("/login/:username", verifyToken , (req, res) => {
+  const user_name = req.body.user_name;
   try {
-    DBconnect.query('SELECT * FROM users where user_name = ?', [username] ,(err, result)=>{
+    DBconnect.query('SELECT * FROM users where user_name = ?', [user_name] ,(err, result)=>{
       if (result) {
         res.send(result);
     }

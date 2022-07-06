@@ -12,14 +12,14 @@ import { useState } from "react";
 const Login = () => {
   const [user_name, setUser_name] = useState("");
   const [password, setPassword] = useState("");
-  let header = {
-    headers: {
-      Authorization: localStorage.getItem("token"),
-      "Content-Type": "application/json",
-    },
-  };
+  // let header = {
+  //   headers: {
+  //     Authorization: localStorage.getItem("token"),
+  //     "Content-Type": "application/json",
+  //   },
+  // };
   const login = () => {
-    Axios.post("http://localhost:5000/login", header, {
+    Axios.post("http://localhost:5000/login", {
       user_name: user_name,
       password: password,
     })
