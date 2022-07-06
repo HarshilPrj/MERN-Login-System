@@ -41,9 +41,6 @@ app.post("/login", async (req, res) => {
   const user_name = req.body.user_name;
   const password = req.body.password;
 
-  // localStorage.set("token", token);
-  // let get = localStorage.get("token");
-  // console.log("GET: ", get);
   try {
     DBconnect.query(
       "select * from users where user_name = ?",
@@ -53,16 +50,15 @@ app.post("/login", async (req, res) => {
           console.log(">>>>>>", password);
           console.log(">>>>>>", results[0].password);
           if (result) {
-            return res.send(result);
+            const token = jwt.sign({ user_name }, JWT_SECRET, { expiresIn: "10 minute" });
+            return res.send({ ...results, token });
           } else {
-            return res.status(400).send('Not Found');
+            return res.status(400).send();
           }
         });
       }
     );
 
-    // const token = jwt.sign({ user_name }, JWT_SECRET, { expiresIn: "10 minute", });
-    // res.json({ token })
   } catch (error) {
     console.error(error);
     res.status(500).send("some Error Occured");

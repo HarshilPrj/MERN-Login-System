@@ -9,22 +9,21 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { useState } from "react";
 
-
 const Login = () => {
+  const [user_name, setUser_name] = useState("");
+  const [password, setPassword] = useState("");
 
-    const [user_name, setUser_name] = useState("");
-    const [password, setPassword] = useState("");
-    // const [loginStatus, setLoginStatus] = useState('');
-
-    
   const login = () => {
-    Axios
-      .post("http://localhost:5000/login", {
-        user_name: user_name,
-        password: password,
-      })
+    Axios.post("http://localhost:5000/login", {
+      user_name: user_name,
+      password: password,
+    })
       .then((res) => {
         console.log(res);
+        localStorage.setItem("token", res.data.token);
+      })
+      .catch((err) => {
+        console.log("user not exists");
       });
   };
 
@@ -39,22 +38,21 @@ const Login = () => {
           height: "100vh",
           backgroundImage: `url(${"../image/1236631.jpg"})`,
           backgroundSize: "cover",
-          backgroundColor:"lightskyblue"
+          backgroundColor: "lightskyblue",
         }}
       >
         <form>
-        <Paper
+          <Paper
             elevation={20}
             sx={{
               padding: "1rem",
               height: "30rem",
               width: "40rem",
               borderRadius: "1rem",
-              backgroundColor:'lightcyan'
-              
+              backgroundColor: "lightcyan",
             }}
           >
-            <Stack spacing={6} sx={{ display: "flex"}}>
+            <Stack spacing={6} sx={{ display: "flex" }}>
               <h1 id="h1"> Login </h1>
               <TextField
                 required
@@ -63,7 +61,7 @@ const Login = () => {
                 type="email"
                 variant="standard"
                 onChange={(e) => {
-                    setUser_name(e.target.value);
+                  setUser_name(e.target.value);
                 }}
               />
               <TextField
@@ -72,9 +70,8 @@ const Login = () => {
                 label="Password"
                 type="password"
                 variant="standard"
-                
                 onChange={(e) => {
-                    setPassword(e.target.value);
+                  setPassword(e.target.value);
                 }}
               />
               <FormControlLabel
