@@ -6,7 +6,6 @@ const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const verifyToken = require("../Middleware/token");
 const bcrypt = require("bcryptjs");
-const localStorage = require("local-storage");
 const JWT_SECRET = "Coodeitisbest$solutions$pvt$ltd";
 
 app.use(bodyparser.json());
@@ -37,7 +36,7 @@ app.post("/add_user", async (req, res) => {
   });
 });
 
-app.post("/login", async (req, res) => {
+app.post("/login", verifyToken , async (req, res) => {
   const user_name = req.body.user_name;
   const password = req.body.password;
 
