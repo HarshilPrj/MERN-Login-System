@@ -12,16 +12,21 @@ import { useState } from "react";
 const Login = () => {
   const [user_name, setUser_name] = useState("");
   const [password, setPassword] = useState("");
-
+  let header = {
+    headers: {
+      Authorization: localStorage.getItem("token"),
+      "Content-Type": "application/json",
+    },
+  };
   const login = () => {
-    Axios.post("http://localhost:5000/login", {
+    Axios.post("http://localhost:5000/login", header, {
       user_name: user_name,
       password: password,
     })
       .then((res) => {
         console.log(res);
         let token = res.data.token;
-        localStorage.setItem("token",JSON.stringify([{token}]));
+        localStorage.setItem("token", JSON.stringify([{ token }]));
       })
       .catch((err) => {
         console.log("user not exists");

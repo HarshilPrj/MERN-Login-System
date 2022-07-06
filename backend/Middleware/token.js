@@ -1,10 +1,25 @@
 const jwt = require("jsonwebtoken");
-const localStorage = require("local-storage");
+const JWT_SECRET = "Coodeitisbest$solutions$pvt$ltd";
 
-const verifyToken = (req, res, next) => {
-  console.log("working");
-  let GetToken = localStorage.get('token');
-  console.log(GetToken);
+const verifyToken = async (req, res, next) => {
+  const token =  await req.header('token');
+  console.log(token);
+  if(!token){
+    res.status(401).send({err:'invalid token'});
+  }
+  try {
+   jwt.verify(token, JWT_SECRET, (error, data) => {
+      if(error){
+        return res.send({ message: 'Token is expired! please try again.' });
+      }
+    });
+  } catch (error) {
+   return res.status(401).send({
+      error: error.message,
+      stack: error.stack
+    });
+  }
+  next()
 };
 
 module.exports = verifyToken;
