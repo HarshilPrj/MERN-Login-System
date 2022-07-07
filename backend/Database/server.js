@@ -42,13 +42,11 @@ app.post("/login", async (req, res) => {
       
       bcrypt.compare(password, results[0].password, function (err, result) {
         
-        if (result) {
-          
+        if (result) {         
           const user = results[0].user_name;
           
           const token = jwt.sign({ user }, JWT_SECRET, { expiresIn: "1 day" });
           res.send({...results, token});
-          res.redirect("/checkuser");
         } else {
           return res.status(400).json({ error: 'please provide a valid user_name and password' });
         }
