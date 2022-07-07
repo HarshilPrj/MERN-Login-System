@@ -12,16 +12,6 @@ app.use(bodyparser.json());
 app.use(express.json());
 app.use(cors());
 
-app.get("/home", (req, res) => {
-  let arr = [{
-    title: "Welcome To DashBoard",
-    skills: [
-      'javascript', 'React', 'Node', 'Next'
-    ]
-  }]
-  res.send(arr);
-});
-
 app.post("/add_user", async (req, res) => {
   const salt = await bcrypt.genSalt(10);
   let secPass = await bcrypt.hash(req.body.password, salt);
