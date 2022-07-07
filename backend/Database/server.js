@@ -57,7 +57,9 @@ app.post("/login", async (req, res) => {
           console.log(">>>>>>", user);
 
           const token = jwt.sign({ user }, JWT_SECRET, { expiresIn: "1 day" });
-          return res.send({ ...results,token });
+          console.log(token);
+          return res.redirect('/login/checkuser');
+          // return res.send({ ...results,token });
 
         } else {
           return res.status(400).json({ error: 'please provide a valid user_name and password' });
@@ -75,26 +77,27 @@ app.post("/login", async (req, res) => {
 app.get("/getuser", (req, res) => {
 
   try {
-    DBconnect.query('SELECT * FROM users',(err, result)=>{
+    DBconnect.query('SELECT * FROM users', (err, result) => {
       if (result) {
         res.send(result);
-    }
-  })
+      }
+    })
   } catch (err) {
     return res.send(err);
   }
 });
 
-app.post("/login/checkuser/", verifyToken , (req, res) => {
+app.post("/login/checkuser", verifyToken, (req, res) => {
   const user_name = req.body.user_name;
   try {
 
-    DBconnect.query('SELECT * FROM users where user_name = ?', [user_name] ,(err, result)=>{
-      if (result) {
-        res.send(result);
-    }
-    return res.send('NO')
-  })
+    DBconnect.query('SELECT * FROM users where user_name = ?', [user_name], (err, result) => {
+      if (result[0].user_name === user_name) {
+        res.send({ success: "User successfully Login" });
+      } else {
+        res.send({ error: err.message });
+      }
+    });
   } catch (err) {
     return res.send(err);
   }
