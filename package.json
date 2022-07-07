@@ -17,6 +17,7 @@
     "cors": "^2.8.5",
     "encrypt-password": "^1.0.1",
     "express": "^4.18.1",
+    "fetch": "^1.1.0",
     "jsonwebtoken": "^8.5.1",
     "jwk": "^0.0.2",
     "local-storage": "^2.0.0",
