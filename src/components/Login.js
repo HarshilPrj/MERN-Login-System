@@ -12,13 +12,8 @@ import { useState } from "react";
 const Login = () => {
   const [user_name, setUser_name] = useState("");
   const [password, setPassword] = useState("");
-  // let header = {
-  //   headers: {
-  //     Authorization: localStorage.getItem("token"),
-  //     "Content-Type": "application/json",
-  //   },
-  // };
-  const login = () => {
+
+  const login = async () => {
     Axios.post("http://localhost:5000/login", {
       user_name: user_name,
       password: password,
@@ -31,6 +26,26 @@ const Login = () => {
       .catch((err) => {
         console.log("user not exists");
       });
+  };
+
+  const check = async () => {
+    let user = await JSON.parse(localStorage.getItem("token"));
+    console.log(user[0].token);
+    const token = user[0].toekn;
+
+    const api = "http://localhost:5000/checkuser";
+
+    Axios.get(api, { headers: { Authorization: `Bearer ${token}` } })
+    .then((res) => {
+        console.log(res.data);
+      });
+  };
+
+  const add = () => {
+    login();
+    setTimeout(() => {
+      check();
+    }, 1000);
   };
 
   return (
@@ -85,7 +100,7 @@ const Login = () => {
                 label="I accept all the terms & conditions."
               />
 
-              <Button variant="contained" onClick={login}>
+              <Button variant="contained" onClick={add}>
                 Sign In
               </Button>
               {/* <h1>{loginStatus}</h1> */}

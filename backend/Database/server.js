@@ -43,64 +43,32 @@ app.post("/add_user", async (req, res) => {
 });
 
 app.post("/login", async (req, res) => {
+  
   const user_name = req.body.user_name;
   const password = req.body.password;
-
+  
   try {
     DBconnect.query("select * from users where user_name = ?", [user_name], (err, results) => {
-
+      
       bcrypt.compare(password, results[0].password, function (err, result) {
-
+        
         if (result) {
-
+          
           const user = results[0].user_name;
-          console.log(">>>>>>", user);
-
+          
           const token = jwt.sign({ user }, JWT_SECRET, { expiresIn: "1 day" });
-          console.log(token);
-          return res.redirect('/login/checkuser');
-          // return res.send({ ...results,token });
-
+          res.send({...results, token});
+          res.redirect("/checkuser");
         } else {
           return res.status(400).json({ error: 'please provide a valid user_name and password' });
         }
       });
     });
-
-
   } catch (error) {
-    console.error(error);
     res.status(500).send("some Error Occured");
   }
 });
 
-app.get("/getuser", (req, res) => {
-
-  try {
-    DBconnect.query('SELECT * FROM users', (err, result) => {
-      if (result) {
-        res.send(result);
-      }
-    })
-  } catch (err) {
-    return res.send(err);
-  }
-});
-
-app.post("/login/checkuser", verifyToken, (req, res) => {
-  const user_name = req.body.user_name;
-  try {
-
-    DBconnect.query('SELECT * FROM users where user_name = ?', [user_name], (err, result) => {
-      if (result[0].user_name === user_name) {
-        res.send({ success: "User successfully Login" });
-      } else {
-        res.send({ error: err.message });
-      }
-    });
-  } catch (err) {
-    return res.send(err);
-  }
-});
+app.use("/checkuser", verifyToken );
 
 app.listen(5000);

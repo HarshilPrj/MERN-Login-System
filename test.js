@@ -1,5 +1,4 @@
 const app = require("express")();
-const axios = require("axios");
 
 // The `res.redirect()` function sends back an HTTP 302 by default.
 // When an HTTP client receives a response with status 302, it will send
