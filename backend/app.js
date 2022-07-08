@@ -14,7 +14,7 @@ app.post("/add_user", async (req, res) => {
   addUser(req, res);
 });
 
-app.post("/login",verifyToken, async (req, res) => {
+app.post("/login", verifyToken, async (req, res) => {
   authenticate(req, res);
 });
 

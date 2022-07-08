@@ -1,13 +1,13 @@
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = "Coodeitisbest$solutions$pvt$ltd";
-const loginURL = "/login"
+const loginURL = "/loginn";
 
 const verifyToken = async (req, res, next) => {
-
   const url = req.url;
   if (url === loginURL) {
-    console.log("Login successfully ");
     return next();
+  } else {
+    res.status(500).send({ 500: "Server error" });
   }
 
   // const token = req.headers.authorization;
