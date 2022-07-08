@@ -3,39 +3,40 @@ const JWT_SECRET = "Coodeitisbest$solutions$pvt$ltd";
 const loginURL = "/login"
 
 const verifyToken = async (req, res, next) => {
-  
+
   const url = req.url;
-  if(url === loginURL){
+  if (url === loginURL) {
+    console.log("Login successfully ");
     return next();
   }
 
-  const token = req.headers.authorization;
-  if (!token) {
-    res.status(401).send("Invalid token");
-  }
-  try {
-    jwt.verify(token, JWT_SECRET, (error, data) => {
+  // const token = req.headers.authorization;
+  // if (!token) {
+  //   res.status(401).send("Invalid token");
+  // }
+  // try {
+  //   jwt.verify(token, JWT_SECRET, (error, data) => {
 
-      if (error) {
-        res.send({ error: error });
-        console.log("token not verified");
-      }
+  //     if (error) {
+  //       res.send({ error: error });
+  //       console.log("token not verified");
+  //     }
 
-      if (data.user === req.body.user_name) {
-        res.send({ success: "User successfully Login" });
-      } else {
-        res.status(404).send({ error: "User not found" });
-      }
-    });
+  //     if (data.user === req.body.user_name) {
+  //       res.send({ success: "User successfully Login" });
+  //     } else {
+  //       res.status(404).send({ error: "User not found" });
+  //     }
+  //   });
 
-  } catch (error) {
+  // } catch (error) {
 
-    return res.status(401).send({
-      error: error.message,
-      stack: error.stack,
-    });
-  }
-  next();
+  //   return res.status(401).send({
+  //     error: error.message,
+  //     stack: error.stack,
+  //   });
+  // }
+  // next();
 };
 
 module.exports = verifyToken;
