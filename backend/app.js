@@ -5,6 +5,7 @@ const cors = require("cors");
 const verifyToken = require("./Middleware/token");
 const { authenticate } = require("./comman/login");
 const { addUser } = require("./comman/register");
+const { getalluser } = require("./comman/getUser");
 
 app.use(bodyparser.json());
 app.use(express.json());
@@ -16,6 +17,10 @@ app.post("/add_user", async (req, res) => {
 
 app.post("/login", verifyToken, async (req, res) => {
   authenticate(req, res);
+});
+
+app.get("/home", async (req, res) => {
+  getalluser(req, res);
 });
 
 app.listen(5000);

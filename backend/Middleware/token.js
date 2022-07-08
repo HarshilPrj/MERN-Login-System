@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = "Coodeitisbest$solutions$pvt$ltd";
-const loginURL = "/loginn";
+const loginURL = "/login";
 
 const verifyToken = async (req, res, next) => {
   const url = req.url;
