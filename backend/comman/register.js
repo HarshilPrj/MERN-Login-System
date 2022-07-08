@@ -13,17 +13,10 @@ module.exports = {
     let sql = "insert into users (user_name, password, no) values ?";
     let values = [[user_name, password, no]];
 
-    DBconnect.query(sql, [values], (err, result) => {
-      if (err) {
-        res.send("please enter your username and password");
+    DBconnect.query(sql, [values], (error, result) => {
+      if (error) {
+        res.send({error: "......Try To Different Username and password"})
       }
-      DBconnect.query(sql, [values], (err, result) => {
-        if (err) {
-          throw err;
-        } else {
-          res.send(result);
-        }
-      });
     });
-  },
-};
+  }
+}
