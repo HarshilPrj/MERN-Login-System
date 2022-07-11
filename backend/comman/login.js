@@ -8,21 +8,23 @@ module.exports = {
     const user_name = req.body.user_name;
     const password = req.body.password;
 
-
     try {
-      let user = DBconnect.query("select * from users where user_name = ?", [user_name, password]);
-      if (user) {
-        const email = user.values[0];
-        const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: "1 day" });
-        bcrypt.compare(password, user.values[1], function (err, result) {
-          console.log(result);
-          if (result) {
-            res.send({ ...result, token });
+      DBconnect.query("select * from users where user_name = ? ", [user_name], (err, user) => {
+        if (err) {
+          res.send({ err: "UserName does not match" })
+        }
+        // check password
+        bcrypt.compare(password, user[0].password, function (err, result) {
+          if (result == true) {
+            const token = jwt.sign({ user_name }, JWT_SECRET, { expiresIn: "1 day" });
+            res.send({ ...user, token });
+          } else {
+            res.send({ error: "Passwords does not match" });
           }
         });
-      }
-    } catch (e) {
-      console.log("Not Found")
+      });
+    } catch (err) {
+      res.send({ err: "User not found" })
     }
-  }
-}
+  },
+};
