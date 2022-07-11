@@ -20,32 +20,10 @@ const Login = () => {
     })
       .then((res) => {
         console.log(res);
-        let token = res.data.token;
-        localStorage.setItem("token", JSON.stringify([{ token }]));
       })
       .catch((err) => {
         console.log("user not exists");
       });
-  };
-
-  const check = async () => {
-    let user = await JSON.parse(localStorage.getItem("token"));
-    console.log(user[0].token);
-    const token = user[0].toekn;
-
-    const api = "http://localhost:5000/checkuser";
-
-    Axios.get(api, { headers: { Authorization: `Bearer ${token}` } })
-    .then((res) => {
-        console.log(res.data);
-      });
-  };
-
-  const add = () => {
-    login();
-    setTimeout(() => {
-      check();
-    }, 1000);
   };
 
   return (
@@ -100,7 +78,7 @@ const Login = () => {
                 label="I accept all the terms & conditions."
               />
 
-              <Button variant="contained" onClick={add}>
+              <Button variant="contained" onClick={login}>
                 Sign In
               </Button>
               {/* <h1>{loginStatus}</h1> */}
