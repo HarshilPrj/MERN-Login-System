@@ -84,11 +84,23 @@ const Login = () => {
                 label="I accept all the terms & conditions."
               />
 
-              <Button variant="contained" onClick={login}>
-                Sign In
-              </Button>
-              {/* <h1>{loginStatus}</h1> */}
-              {/* <Button variant="contained" onClick={() => navigate("/registration")}>Sign Up</Button> */}
+              <div>
+                <Button
+                  variant="contained"
+                  onClick={login}
+                  sx={{ width: "24vw" }}
+                >
+                  Sign In
+                </Button>
+
+                <Button
+                  variant="contained"
+                  onClick={() => navigate("/add_user")}
+                  sx={{ width: "23vw", marginLeft: "2rem" }}
+                >
+                  Sign Up
+                </Button>
+              </div>
             </Stack>
           </Paper>
         </form>

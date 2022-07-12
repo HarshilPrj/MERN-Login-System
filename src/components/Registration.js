@@ -45,13 +45,13 @@ const Registration = () => {
             sx={{
               marginTop: "2rem",
               padding: "1rem",
-              height: "35rem",
-              width: "40rem",
+              height: "30rem",
+              width: "30rem",
               borderRadius: "1rem",
               backgroundColor: "lightcyan",
             }}
           >
-            <Stack spacing={6} sx={{ display: "flex", marginTop: "10px" }}>
+            <Stack spacing={4} sx={{ display: "flex", marginTop: "10px" }}>
               <h1 id="h1"> Registration</h1>
               <TextField
                 required
@@ -89,7 +89,7 @@ const Registration = () => {
                 control={<Checkbox id="checkbox" required />}
               />
 
-              <Button variant="contained" onClick={register}>
+              <Button variant="contained" type="submit" onSubmit={register}>
                 Create Account
               </Button>
             </Stack>
