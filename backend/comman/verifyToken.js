@@ -8,7 +8,6 @@ module.exports = {
         if (!token) {
             res.status(401).send("Invalid token");
         }   
-
         try {
             jwt.verify(token, JWT_SECRET, (error, data) => {
                 console.log(data);
