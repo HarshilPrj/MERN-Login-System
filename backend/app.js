@@ -31,7 +31,7 @@ app.get("/logout", verifyToken, async (req, res) => {
   .status(200).json({ Success: "Logged out" });
 });
 
-app.get("/protected", verifyToken, (req, res) => {
+app.get("/login/user", verifyToken, (req, res) => {
   return res.json({ user: { userName: req.user_name } });
 });
 
