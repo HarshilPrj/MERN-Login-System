@@ -3,6 +3,7 @@ const app = express();
 const bodyparser = require("body-parser");
 const cors = require("cors");
 const cookie = require("cookie-parser");
+require('dotenv').config();
 const checkURL = require("./Middleware/checkURL");
 const verifyToken = require("./Middleware/verifyToken");
 const { authenticate } = require("./comman/login");

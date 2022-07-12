@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-const JWT_SECRET = "Coodeitisbest$solutions$pvt$ltd";
 
 const verifyToken = async (req, res, next) => {
   const token = req.cookies.user_token;
@@ -8,7 +7,7 @@ const verifyToken = async (req, res, next) => {
   }
 
   try {
-    jwt.verify(token, JWT_SECRET, (error, data) => {
+    jwt.verify(token, process.env.JWT_SECRET, (error, data) => {
       req.user_name = data.userName;
       return next();
     });
