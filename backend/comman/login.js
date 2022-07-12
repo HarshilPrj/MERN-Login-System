@@ -11,15 +11,22 @@ module.exports = {
     try {
       DBconnect.query("select * from users where user_name = ? ", [user_name], (err, user) => {
         if (user.length === 0) {
-          res.send({ Error: "UserName not found" });
+          return res.send({ Error: "UserName not found" });
         } else {
           bcrypt.compare(password, user[0].password, function (err, result) {
             if (result == true) {
               let userName = user[0].user_name;
               const token = jwt.sign({ userName }, JWT_SECRET, { expiresIn: "1 day" });
-              res.send({ ...user, token });
+              return res
+              .cookie("user_token", token, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === "production",
+              })
+              .status(200)
+              .json({ message: "Logged in successfully" });
+              // res.send({ ...user, token });
             } else {
-              res.send({ Error: "Passwords does not match" });
+              return res.send({ Error: "Passwords does not match" });
             }
           });
         }
