@@ -18,11 +18,12 @@ module.exports = {
               let userName = user[0].user_name;
               const token = jwt.sign({ userName }, JWT_SECRET, { expiresIn: "1 day" });
               return res
-              .cookie("user_token", token, {
-                httpOnly: true,
-              })
-              .status(200)
-              .json({ message: "Logged in successfully" });
+                .cookie("user_token", token, {
+                  expires: new Date(Date.now() + 180000),
+                  httpOnly: true
+                })
+                .status(200)
+                .json({ message: "Logged in successfully", token }); 
               // .send({ ...user, token });
             } else {
               return res.send({ Error: "Passwords does not match" });
@@ -32,7 +33,7 @@ module.exports = {
       });
     }
     catch (err) {
-      res.send({ Error: "User not found" })
+      res.send({ Error: "User not found" });
     }
   }
 }

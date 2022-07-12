@@ -8,8 +8,10 @@ import Button from "@mui/material/Button";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Registration = () => {
+  const navigate = useNavigate();
   const [user_name, setUser_name] = useState("");
   const [password, setPassword] = useState("");
   const [no, setNo] = useState("");
@@ -20,7 +22,7 @@ const Registration = () => {
       password: password,
       no: no,
     }).then((res) => {
-      console.log(res);
+      navigate("/login");
     });
   };
   return (
@@ -34,7 +36,7 @@ const Registration = () => {
           height: "100vh",
           backgroundImage: `url(${"../image/1236631.jpg"})`,
           backgroundSize: "cover",
-          backgroundColor:"lightskyblue"
+          backgroundColor: "lightskyblue",
         }}
       >
         <form>
@@ -46,7 +48,7 @@ const Registration = () => {
               height: "35rem",
               width: "40rem",
               borderRadius: "1rem",
-              backgroundColor:'lightcyan'
+              backgroundColor: "lightcyan",
             }}
           >
             <Stack spacing={6} sx={{ display: "flex", marginTop: "10px" }}>

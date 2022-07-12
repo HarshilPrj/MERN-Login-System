@@ -8,8 +8,10 @@ import Button from "@mui/material/Button";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [user_name, setUser_name] = useState("");
   const [password, setPassword] = useState("");
 
@@ -19,10 +21,14 @@ const Login = () => {
       password: password,
     })
       .then((res) => {
-        console.log(res);
+        if (res.data.Error) {
+          window.alert("Invalid credentials");
+        } else {
+          navigate("/home");
+        }
       })
       .catch((err) => {
-        console.log("user not exists");
+        window.alert("user Not found");
       });
   };
 
