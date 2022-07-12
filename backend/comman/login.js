@@ -20,7 +20,6 @@ module.exports = {
               return res
               .cookie("user_token", token, {
                 httpOnly: true,
-                secure: process.env.NODE_ENV === "production",
               })
               .status(200)
               .json({ message: "Logged in successfully" });
