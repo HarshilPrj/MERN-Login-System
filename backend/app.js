@@ -22,17 +22,19 @@ app.post("/login", checkURL, async (req, res) => {
   authenticate(req, res);
 });
 
-app.get("/home", async (req, res) => {
-  getalluser(req, res);
+app.get("/login/user", verifyToken, (req, res) => {
+  return res.json({ user: { userName: req.user_name } });
 });
 
 app.get("/logout", verifyToken, async (req, res) => {
-  return res.clearCookie("user_token")
-  .status(200).json({ Success: "Logged out" });
+  return res
+    .clearCookie("user_token")
+    .status(200)
+    .json({ Success: "Logged out" });
 });
 
-app.get("/login/user", verifyToken, (req, res) => {
-  return res.json({ user: { userName: req.user_name } });
+app.get("/home", async (req, res) => {
+  getalluser(req, res);
 });
 
 app.listen(5000);

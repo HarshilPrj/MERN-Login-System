@@ -1,12 +1,8 @@
 const DBconnect = require("../Database/config ");
 const bcrypt = require("bcryptjs");
-const express = require('express');
-const app = express();
 
 module.exports = {
   async addUser(req, res) {
-
-  
     const salt = await bcrypt.genSalt(10);
     let secPass = await bcrypt.hash(req.body.password, salt);
 
@@ -19,8 +15,8 @@ module.exports = {
 
     DBconnect.query(sql, [values], (error, result) => {
       if (error) {
-        res.send({error: "......Try To Different Username and password"})
+        res.send({ error: "User Already Exist. Try To Different UserName" });
       }
     });
-  }
-}
+  },
+};
