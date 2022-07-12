@@ -7,7 +7,7 @@ const checkURL = require("./Middleware/checkURL");
 const { authenticate } = require("./comman/login");
 const { addUser } = require("./comman/register");
 const { getalluser } = require("./comman/getUser");
-const { verify } = require("jsonwebtoken");
+const { verifyToken } = require("./comman/verifyToken");
 
 app.use(bodyparser.json());
 app.use(express.json());
@@ -20,6 +20,9 @@ app.post("/add_user", async (req, res) => {
 
 app.post("/login", checkURL, async (req, res) => {
   authenticate(req, res);
+  setTimeout(() => {
+    verifyToken(req, res);
+  }, 6000);
 });
 
 app.get("/home", async (req, res) => {

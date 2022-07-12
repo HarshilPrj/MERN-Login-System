@@ -24,7 +24,7 @@ module.exports = {
               })
               .status(200)
               .json({ message: "Logged in successfully" });
-              // res.send({ ...user, token });
+              // .send({ ...user, token });
             } else {
               return res.send({ Error: "Passwords does not match" });
             }

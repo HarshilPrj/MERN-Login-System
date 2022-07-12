@@ -1,26 +1,24 @@
-const jwt = require("jsonwebtoken");
-const JWT_SECRET = "Coodeitisbest$solutions$pvt$ltd";
+// const jwt = require("jsonwebtoken");
+// const JWT_SECRET = "Coodeitisbest$solutions$pvt$ltd";
 
-const verifyToken = async (req, res, next) => {
-    const token = req.cookies.user_token;
-    console.log(token);
-    if (!token) {
-        res.status(401).send("Invalid token");
-    }
+// const verifyToken = async (req, res, next) => {
+//     const token = req.cookies.user_token;
+//     console.log(token);
+//     if (!token) {
+//         res.status(401).send("Invalid token");
+//     }
 
-    try {
-        jwt.verify(token, JWT_SECRET, (error, data) => {
-            console.log(data);
-            if (error) {
-                res.send({ error: error });
-                console.log("token not verified");
-            }
-        });
-    } catch (error) {
-        return res.status(401).send({
-            error: error.message,
-            stack: error.stack,
-        });
-    }
-    next();
-};
+//     try {
+//         jwt.verify(token, JWT_SECRET, (error, data) => {
+//             console.log(data);
+//             return next();
+//         });
+//     } catch (error) {
+//         return res.status(401).send({
+//             error: error.message,
+//             stack: error.stack,
+//         });
+//     }
+// };
+
+// module.exports = verifyToken;
