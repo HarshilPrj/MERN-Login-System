@@ -27,10 +27,12 @@ app.get("/home", async (req, res) => {
 });
 
 app.get("/logout", verifyToken, async (req, res) => {
-  return res
-  .clearCookie("user_token")
-  .status(200)
-  .json({ msg: "Logged out" });
+  return res.clearCookie("user_token")
+  .status(200).json({ Success: "Logged out" });
+});
+
+app.get("/protected", verifyToken, (req, res) => {
+  return res.json({ user: { userName: req.user_name } });
 });
 
 app.listen(5000);
