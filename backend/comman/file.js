@@ -1,4 +1,4 @@
-const DBconnect = require("../Database/config ");
+const DBconnect = require("../Database/database");
 
 module.exports = {
     async uploadFile(req, res) {
@@ -9,7 +9,7 @@ module.exports = {
 
         const sql = "INSERT INTO users (fileName) VALUES (' " + req.file.filename + " ')";
         DBconnect.query(sql, (err, result) => {
-            return res.send({Message: 'File is successfully uploaded'})
+            return res.send({ Message: "File is successfully uploaded" });
         });
     },
 };

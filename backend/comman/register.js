@@ -1,4 +1,4 @@
-const DBconnect = require("../Database/config ");
+const DBconnect = require("../Database/database");
 const bcrypt = require("bcryptjs");
 
 module.exports = {
