@@ -3,7 +3,8 @@ const app = express();
 const bodyparser = require("body-parser");
 const cors = require("cors");
 const cookie = require("cookie-parser");
-require('dotenv').config();
+require("dotenv").config();
+const multer = require("multer");
 const checkURL = require("./Middleware/checkURL");
 const verifyToken = require("./Middleware/verifyToken");
 const { authenticate } = require("./comman/login");
@@ -36,6 +37,21 @@ app.get("/logout", verifyToken, async (req, res) => {
 
 app.get("/home", async (req, res) => {
   getalluser(req, res);
+});
+
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, "uploads");
+    },
+    filename: (req, file, cb) => {
+      cb(null, file.fieldname + "-" + Date.now() + ".jpg");
+    },
+  }),
+}).single("user_photo");
+
+app.post("/profile", upload, (req, res) => {
+  res.send("File uploaded");
 });
 
 app.listen(5000);
