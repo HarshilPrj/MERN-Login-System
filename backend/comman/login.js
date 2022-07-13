@@ -18,7 +18,7 @@ module.exports = {
               const token = jwt.sign({ userName }, process.env.JWT_SECRET, { expiresIn: "1 day" });
               res
                 .cookie("user_token", token, {
-                  // expires: new Date(Date.now() + 180000),
+                  expires: new Date(Date.now() + 180000),
                   httpOnly: true
                 })
                 .status(200)
