@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(cors());
 app.use(cookie());
 
-app.post("/add_user", async (req, res) => {
+app.post("/add_user",upload, async (req, res) => {
   addUser(req, res);
 });
 
