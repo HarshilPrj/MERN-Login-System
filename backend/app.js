@@ -4,12 +4,13 @@ const bodyparser = require("body-parser");
 const cors = require("cors");
 const cookie = require("cookie-parser");
 require("dotenv").config();
-const multer = require("multer");
+const upload = require("./Middleware/uploadFile");
 const checkURL = require("./Middleware/checkURL");
 const verifyToken = require("./Middleware/verifyToken");
 const { authenticate } = require("./comman/login");
 const { addUser } = require("./comman/register");
 const { getalluser } = require("./comman/getUser");
+const { uploadFile } = require("./comman/file");
 
 app.use(bodyparser.json());
 app.use(express.json());
@@ -39,19 +40,8 @@ app.get("/home", async (req, res) => {
   getalluser(req, res);
 });
 
-const upload = multer({
-  storage: multer.diskStorage({
-    destination: (req, file, cb) => {
-      cb(null, "uploads");
-    },
-    filename: (req, file, cb) => {
-      cb(null, file.fieldname + "-" + Date.now() + ".jpg");
-    },
-  }),
-}).single("user_photo");
-
 app.post("/profile", upload, (req, res) => {
-  res.send("File uploaded");
+  uploadFile(req, res);
 });
 
 app.listen(5000);
