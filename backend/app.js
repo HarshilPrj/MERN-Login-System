@@ -27,10 +27,10 @@ app.post("/login", checkURL, async (req, res) => {
 });
 
 app.get("/login/user", verifyToken, (req, res) => {
-
   DBconnect.query("SELECT * FROM users WHERE user_name = ?", [req.user_name], (err, result) => {
-    return res.json({ user: result });
-  })
+      return res.json({ user: result });
+    }
+  );
 });
 
 app.get("/logout", verifyToken, async (req, res) => {
