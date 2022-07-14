@@ -4,19 +4,23 @@ const bcrypt = require("bcryptjs");
 module.exports = {
   async addUser(req, res) {
     const salt = await bcrypt.genSalt(10);
-    let secPass = await bcrypt.hash(req.body.password, salt);
+    const secPass = await bcrypt.hash(req.body.password, salt);
 
     const user_name = req.body.user_name;
     const password = secPass;
     const no = req.body.no;
+    const file = req.body.file;
+    console.log(file);
 
-    let sql = "insert into users (user_name, password, no) values ?";
-    let values = [[user_name, password, no]];
+    let sql = "insert into users (user_name, password, no, fileName) values ?";
+    let values = [[user_name, password, no, file]];
 
     DBconnect.query(sql, [values], (error, result) => {
       if (error) {
         res.send({ error: "User Already Exist. Try To Different UserName" });
       }
+      console.log(error);
+      console.log(result);
     });
   },
 };
