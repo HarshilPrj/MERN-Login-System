@@ -44,8 +44,4 @@ app.get("/home", async (req, res) => {
   getalluser(req, res);
 });
 
-app.post("/profile", upload, (req, res) => {
-  uploadFile(req, res);
-});
-
 app.listen(5000);
