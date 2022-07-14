@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const DBconnect = require("./Database/database");
 const bodyparser = require("body-parser");
 const cors = require("cors");
 const cookie = require("cookie-parser");
@@ -26,7 +27,10 @@ app.post("/login", checkURL, async (req, res) => {
 });
 
 app.get("/login/user", verifyToken, (req, res) => {
-  return res.json({ user: { userName: req.user_name } });
+
+  DBconnect.query("SELECT * FROM users WHERE user_name = ?", [req.user_name], (err, result) => {
+    return res.json({ user: result });
+  })
 });
 
 app.get("/logout", verifyToken, async (req, res) => {
