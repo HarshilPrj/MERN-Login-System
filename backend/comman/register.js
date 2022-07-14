@@ -9,8 +9,7 @@ module.exports = {
     const user_name = req.body.user_name;
     const password = secPass;
     const no = req.body.no;
-    const file = req.body.file;
-    console.log(file);
+    const file = req.file.filename;
 
     let sql = "insert into users (user_name, password, no, fileName) values ?";
     let values = [[user_name, password, no, file]];
@@ -18,9 +17,9 @@ module.exports = {
     DBconnect.query(sql, [values], (error, result) => {
       if (error) {
         res.send({ error: "User Already Exist. Try To Different UserName" });
+      }else{
+        res.send({ success: "user added successfully." });
       }
-      console.log(error);
-      console.log(result);
     });
   },
 };
