@@ -76,7 +76,7 @@ app.get("/login/user", verifyToken, (req, res) => {
   );
 });
 
-app.get("/logout1", verifyToken, async (req, res) => {
+app.get("/logout", verifyToken, async (req, res) => {
   return res
     .clearCookie("user_token")
     .status(200)
