@@ -20,12 +20,13 @@ export default function Profile() {
         const fetchData = async () => {
             let data = await fetch(url, options);
             let parsdata = await data.json();
+            let fileURL = parsdata.data[11].fileName;
             setStore(parsdata.data[11]);
-            setImg(store.fileName);
+            setImg(fileURL);
             console.log(img);
         };
         fetchData();
-    }, []);
+    },[]);
 
     return (
         <>
