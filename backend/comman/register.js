@@ -9,7 +9,7 @@ module.exports = {
     const user_name = req.body.user_name;
     const password = secPass;
     const no = req.body.no;
-    const file = JSON.stringify(req.file);
+    const file = JSON.stringify(req.file.path);
  
 
     let sql = "insert into users (user_name, password, no, fileName) values ?";

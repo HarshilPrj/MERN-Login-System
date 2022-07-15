@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import Axios from "axios";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -7,7 +6,7 @@ import Avatar from "@mui/material/Avatar";
 
 export default function Profile() {
     const [store, setStore] = useState([]);
-    const [img, setImg] = useState([]);
+    const [img, setImg] = useState();
 
     useEffect(() => {
         const options = {
@@ -20,9 +19,10 @@ export default function Profile() {
 
         const fetchData = async () => {
             let data = await fetch(url, options);
-            let parsdata = await data.json;
-            console.log(parsdata);
-            setStore(store);
+            let parsdata = await data.json();
+            setStore(parsdata.data[11]);
+            setImg(store.fileName);
+            console.log(img);
         };
         fetchData();
     }, []);
@@ -34,13 +34,14 @@ export default function Profile() {
                 sx={{ height: "89vh", justifyContent: "center", alignItems: "center" }}
             >
                 <Grid item xs={4}>
-                    <Card sx={{ height: "50vh", width: "30vw" }}>
+                    <Card sx={{ height: "60vh", width: "30vw" }}>
                         <CardContent>
                             <div id="d1">
-                            <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                            <Avatar alt="Remy Sharp" src={img} sx={{height:'5rem', width:'5rem'}}/>
+                                <h4><span style={{ color: "black" }}>Name : </span> Deep prajapati </h4>
                                 <h4><span style={{ color: "black" }}>Email : </span> {store.user_name}</h4>
                                 <h4><span style={{ color: "black" }}>Phone : </span> {store.no}</h4>
-                                <h4><span style={{ color: "black" }}>Photo : </span> {store.fileName}</h4>
+                                <h4><span style={{ color: "black" }}>Location : </span> Ahmedabad - 380001</h4>
                             </div>
                         </CardContent>
                     </Card>
