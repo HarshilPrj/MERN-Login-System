@@ -14,9 +14,9 @@ function App() {
         <Bar1 />
         <Routes>
           <Route excat path="/home" element={<Dashbord />} />
-          <Route excat path="/profile" element={<Profile />} />
-          <Route excat path="/login" element={<Login />} />
           <Route excat path="/add_user" element={<Registration />} />
+          <Route excat path="/login" element={<Login />} />
+          <Route excat path="/profile" element={<Profile />} />
         </Routes>
       </BrowserRouter>
     </div>
