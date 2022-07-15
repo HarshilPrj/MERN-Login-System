@@ -17,7 +17,7 @@ const bull = (
 
 export default function Dashbord() {
   return (
-    <Card sx={{ width:"20vw", height:"15rem" }}>
+    <Card sx={{ width:"10rem" }}>
       <CardContent>
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
           Word of the Day
