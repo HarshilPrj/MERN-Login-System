@@ -34,8 +34,8 @@ export default function Profile() {
                             <div id="d1">
                                 <Avatar
                                     alt="Remy Sharp"
-                                    src={img}
-                                    sx={{ height: "12vh", width: "7vw" }}
+                                    src={img}   
+                                    sx={{ height: 58, width: 58 }}
                                 />
                                 <h4>
                                     <span style={{ color: "black" }}>Name : </span> Deep prajapati
