@@ -12,7 +12,6 @@ export default function Profile() {
     useEffect(() => {
         Axios.get("http://localhost:5000/users")
             .then((res) => {
-                console.log(res.data.data[10].fileName);
                 let photo = res.data.data[10].fileName;
                 setStore(res.data.data[10]);
                 setImg(photo);

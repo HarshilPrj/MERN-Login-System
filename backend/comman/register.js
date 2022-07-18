@@ -9,7 +9,8 @@ module.exports = {
     const user_name = req.body.user_name;
     const password = secPass;
     const no = req.body.no;
-    const photo = req.file.path;
+    const photo = 'E:/Harshil/Reactjs/loginsystem/backend/upload/' + req.body.photo;
+    console.log(photo);
 
     let sql = "insert into users (user_name, password, no, fileName) values ?";
     let values = [[user_name, password, no, photo]];
