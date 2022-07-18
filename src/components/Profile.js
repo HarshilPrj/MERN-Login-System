@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Axios from "axios";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -9,24 +10,17 @@ export default function Profile() {
     const [img, setImg] = useState();
 
     useEffect(() => {
-        const options = {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json;charset=utf-8",
-            },
-        };
-        let url = "http://localhost:5000/users";
-
-        const fetchData = async () => {
-            let data = await fetch(url, options);
-            let parsdata = await data.json();
-            let fileURL = parsdata.data[11].fileName;
-            setStore(parsdata.data[11]);
-            setImg(fileURL);
-            console.log(img);
-        };
-        fetchData();
-    },[]);
+        Axios.get("http://localhost:5000/users")
+            .then((res) => {
+                let photo = res.data.data[10].fileName;
+                let file = photo.slice(7);
+                setStore(res.data.data[10]);
+                setImg(file);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }, [img]);
 
     return (
         <>
@@ -38,11 +32,26 @@ export default function Profile() {
                     <Card sx={{ height: "60vh", width: "30vw" }}>
                         <CardContent>
                             <div id="d1">
-                            <Avatar alt="Remy Sharp" src={img} sx={{height:'5rem', width:'5rem'}}/>
-                                <h4><span style={{ color: "black" }}>Name : </span> Deep prajapati </h4>
-                                <h4><span style={{ color: "black" }}>Email : </span> {store.user_name}</h4>
-                                <h4><span style={{ color: "black" }}>Phone : </span> {store.no}</h4>
-                                <h4><span style={{ color: "black" }}>Location : </span> Ahmedabad - 380001</h4>
+                                {/* <img src={img}></img> */}
+                                <Avatar
+                                    alt="Remy Sharp"
+                                    src={img}
+                                    sx={{ height: "12vh", width: "7vw" }}
+                                />
+                                <h4>
+                                    <span style={{ color: "black" }}>Name : </span> Deep prajapati
+                                </h4>
+                                <h4>
+                                    <span style={{ color: "black" }}>Email : </span>
+                                    {store.user_name}
+                                </h4>
+                                <h4>
+                                    <span style={{ color: "black" }}>Phone : </span> {store.no}
+                                </h4>
+                                <h4>
+                                    <span style={{ color: "black" }}>Location : </span> Ahmedabad
+                                    - 380001
+                                </h4>
                             </div>
                         </CardContent>
                     </Card>
