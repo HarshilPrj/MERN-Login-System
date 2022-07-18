@@ -32,7 +32,6 @@ export default function Profile() {
                     <Card sx={{ height: "60vh", width: "30vw" }}>
                         <CardContent>
                             <div id="d1">
-                                {/* <img src={img}></img> */}
                                 <Avatar
                                     alt="Remy Sharp"
                                     src={img}
