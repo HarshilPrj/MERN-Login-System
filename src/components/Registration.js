@@ -15,12 +15,14 @@ const Registration = () => {
   const [user_name, setUser_name] = useState("");
   const [password, setPassword] = useState("");
   const [no, setNo] = useState("");
+  const [file, setFile] = useState("");
 
   const register = () => {
     Axios.post("http://localhost:5000/add_user", {
       user_name: user_name,
       password: password,
       no: no,
+      photo:file
     }).then((res) => {
       navigate("/login");
     });
@@ -88,10 +90,17 @@ const Registration = () => {
                 label="I accept all the terms & conditions."
                 control={<Checkbox id="checkbox" required />}
               />
-
-              <Button variant="contained" type="submit" onSubmit={register}>
-                Create Account
-              </Button>
+              <div>
+                <Button variant="contained" onClick={register}  sx={{ width: "18vw" }}>
+                  Create Account
+                </Button>
+                <Button variant="contained" component="label" sx={{ width: "19vw",  marginTop:"-4rem", marginLeft:"15rem" }}>
+                  Upload
+                  <input hidden accept=".png" multiple type="file"  onChange={(e) => {
+                  setFile(e.target.files[0].name);
+                }} />
+                </Button>
+              </div>
             </Stack>
           </Paper>
         </form>
