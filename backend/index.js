@@ -33,18 +33,19 @@ passport.use(new Strategy({
         done(null, profile);
     }));
 
-app.get("/", (req, res) => {
-    res.sendStatus(500);
+app.get("/admin", (req, res) => {
+    res.send("Welcome to The Admin!");
 })
 
-app.get("/auth/google", passport.authenticate("google", { scope: ["profile"] }));
+app.get("/login/google", passport.authenticate("google", { scope: ["email", "profile"] }));
 
-app.get("/auth/google/callback", passport.authenticate("google", { failureRedirect: "/auth/fail" }), (req, res, next) => {
+app.get("/login/google/callback", passport.authenticate("google", { successRedirect: "/admin", failureRedirect: "/login/fail" }), (req, res, next) => {
     console.log(req.user, req.isAuthenticated());
     res.send("user login successfully");
 });
 
-app.get("/auth/fail", (req, res, next) => {
+app.get("/login/fail", (req, res, next) => {
+    res.redirect("/login/google");
     res.send("user login failed");
 });
 
@@ -52,7 +53,6 @@ app.get("/logout", (req, res, next) => {
     req.logout((err) => {
         if (err) { return next(err); }
     });
-    // res.redirect("/");
     console.log(req.isAuthenticated());
     res.send("user logged out");
 })
