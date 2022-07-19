@@ -28,16 +28,16 @@ export default function Profile() {
                 sx={{ height: "89vh", justifyContent: "center", alignItems: "center" }}
             >
                 <Grid item xs={4}>
-                    <Card sx={{ height: "60vh", width: "30vw" }}>
+                    <Card sx={{ width: "30vw" }}>
                         <CardContent>
                             <div id="d1">
                                 <Avatar
                                     alt="Remy Sharp"
-                                    src={img}   
+                                    src={img}
                                     sx={{ height: 58, width: 58 }}
                                 />
                                 <h4>
-                                    <span style={{ color: "black" }}>Name : </span> Deep prajapati
+                                    <span style={{ color: "black" }}>Name : </span> Deep Rathod
                                 </h4>
                                 <h4>
                                     <span style={{ color: "black" }}>Email : </span>

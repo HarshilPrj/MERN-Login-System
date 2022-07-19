@@ -42,9 +42,9 @@ app.get("/login/user", verifyToken, (req, res) => {
 app.get("/logout", async (req, res) => {
   res.redirect('/');
   return res
-  .clearCookie("user_token")
-  .status(200)
-  .json({ Success: "Logged out" });
+    .clearCookie("user_token")
+    .status(200)
+    .json({ Success: "Logged out" });
 });
 
 app.get("/users", async (req, res) => {
